@@ -1,7 +1,7 @@
 # csv-postgres-import
 
 Task for Medipass Backend Challenge. Dependencies are already included in the module, so simply need to run npm start to retrieve data.
-At the moment, the program is configured to retrieve a csv file from a website.
+Program is configured for Postgres Database. At the moment, the program is configured to retrieve a csv file from a website.
 
 To run, the following steps are required:
 
