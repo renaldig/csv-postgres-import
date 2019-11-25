@@ -32,7 +32,7 @@ const job = new CronJob('* * * * * *', async () => {
 setTimeout(function () {
     console.log('Terminating job...');
     job.stop();
-    return;
+    return true;
 }, 15000);
 
 //Update database with values to insert with Async method

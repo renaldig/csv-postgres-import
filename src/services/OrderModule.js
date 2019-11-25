@@ -1,5 +1,5 @@
 //Insert and get method for orders table by knex module
-const { knex } = require('./connectInit');
+const { knex } = require('./knex-connect');
 
 const insertData = async (order) => {
     return await knex("orders").insert(order);
