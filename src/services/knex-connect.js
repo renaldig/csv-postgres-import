@@ -7,7 +7,6 @@ const connectionRelease = async() => {
 }
 
 module.exports = {
-    getData,
     knex,
     connectionRelease
 }
