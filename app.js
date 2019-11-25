@@ -3,8 +3,8 @@ const csvParser = require('./src/util/csvParser');
 const customerModule = require('./src/services/CustomerModule');
 const orderModule = require('./src/services/OrderModule');
 
-//Function to read in data from CSV file and parse the data to JSON data to be
-//inserted into the database
+//Function to read in data from CSV file and parse the data to JSON format to be
+//inserted into the database as reqyured
 async function csvToDatabase() {
         try{
             let ordersCsv = await connectInit.getData();

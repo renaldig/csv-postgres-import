@@ -1,4 +1,4 @@
-//Retrieve data from customers with Async method through Knex
+//Retrieve data from customers with Async method through Knex module
 const { knex } = require('./knex-connect');
 
 const get = async (id) => {

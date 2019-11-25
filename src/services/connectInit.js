@@ -1,5 +1,5 @@
 const request = require('request');
-//Modify url with custom url redirected to file within the locale of the url
+//Modify url with custom url redirected to file within the url
 const CSV_LOCALE_URL = 'http://renaldigondosubroto.com/orders.csv';
 
 //Async method to return Promise for connection request to database

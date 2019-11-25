@@ -1,4 +1,4 @@
-//Insert and get method for orders table by knex module
+//Insert and get method for orders table by knex
 const { knex } = require('./knex-connect');
 
 const insertData = async (order) => {
