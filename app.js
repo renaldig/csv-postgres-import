@@ -1,52 +1,43 @@
-const CronJob = require('cron').CronJob;
 const connectInit = require('./src/services/connectInit');
 const csvParser = require('./src/util/csvParser');
 const customerModule = require('./src/services/CustomerModule');
 const orderModule = require('./src/services/OrderModule');
-var iterations = 0;
 
-//Read in data from CSV file
-const job = new CronJob('* * * * * *', async () => {
-    if(iterations == 0){
-
-        //Retrieve data from orders table
-        const ordersCsv = await connectInit.getData();
-        console.log(ordersCsv);
-        let orderFields;
-
-        //Perform parsing of the csv
-        try {
-            orderFields = await csvParser.parse(ordersCsv);
-            console.log(`Order Fields : ${orderFields}`);
-        } catch (e) {
-            console.error(e);
+//Function to read in data from CSV file and parse the data to JSON data to be
+//inserted into the database
+async function csvToDatabase() {
+        try{
+            let ordersCsv = await connectInit.getData();
+            let orderFields = await csvParser.parse(ordersCsv);
+            let orderUpdate = await updateOrders(orderFields);
+            return await finished(ordersCsv, orderFields, orderUpdate);
+        } catch (err) {
+            console.error(err);
         }
+};
 
-        orderFields.shift();
-        await updateOrders(orderFields);
-        iterations++;
-    }
-}, null, true);
+csvToDatabase();
 
-//Set timeout of connection attempt to 15 seconds
-setTimeout(function () {
-    console.log('Terminating job...');
-    job.stop();
-    return true;
-}, 15000);
+//Function to allow for timeout in connection
+function finished (job1, job2, job3) {
+  return new Promise((resolve, reject) => {
+    console.log('Finished! Exiting the running batch job...');
+    setTimeout(() => resolve(1), 100)
+  })
+}
 
 //Update database with values to insert with Async method
 updateOrders = async (orders) => {
-    orders.forEach(async data => {
+    orders.forEach(async value => {
         try {
             const result = await orderModule.insertData({
-                orderid: data[0],
-                customerid: data[1],
-                item: data[2],
-                quantity: data[3]
+                orderid: value[0],
+                customerid: value[1],
+                item: value[2],
+                quantity: value[3]
             });
         } catch (e) {
-            console.error(`Error in job occured ${e.message}`);
+            console.error(`Error occured ${e.message}`);
         }
     });
 };
