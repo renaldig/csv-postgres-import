@@ -8,23 +8,17 @@ const orderModule = require('./src/services/OrderModule');
 async function csvToDatabase() {
         try{
             let ordersCsv = await connectInit.getData();
+            console.log(ordersCsv);
             let orderFields = await csvParser.parse(ordersCsv);
+            orderFields.shift();
+            console.log(ordersFields);
             let orderUpdate = await updateOrders(orderFields);
-            return await finished(ordersCsv, orderFields, orderUpdate);
         } catch (err) {
             console.error(err);
         }
 };
 
 csvToDatabase();
-
-//Function to allow for timeout in connection
-function finished (job1, job2, job3) {
-  return new Promise((resolve, reject) => {
-    console.log('Finished! Exiting the running batch job...');
-    setTimeout(() => resolve(1), 100)
-  })
-}
 
 //Update database with values to insert with Async method
 updateOrders = async (orders) => {
